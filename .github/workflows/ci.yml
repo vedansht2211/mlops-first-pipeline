@@ -44,7 +44,7 @@ jobs:
       
       #step5 : build docker image
       - name: Build Docker image
-        run: docker build -t iris-ml-api:#{{ github.sha }}
+        run: docker build -t iris-ml-api:#{{ github.sha }} .
 
 
 
