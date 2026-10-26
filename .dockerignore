@@ -1,0 +1,7 @@
+.venv/
+mlops/
+__pycache__
+.env
+
+
+
