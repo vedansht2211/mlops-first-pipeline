@@ -49,7 +49,7 @@ def test_health_endpoint(client):
     #now check response body
     assert response.json() == {
         "status":"healthy",
-        "model_name": "iris-classification",
+        "model_name": "iris_classification",
         "model_version":"test-version"
         }
 
