@@ -48,7 +48,7 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
             
             return champion_version.version
     @asynccontextmanager
-    def lifespan(app: FastAPI):
+    async def lifespan(app: FastAPI):
         try:
             app.state.model = model_loader()
         except Exception as ex:
@@ -77,7 +77,7 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
         return {
             "status": "healthy",
             "model_name": "iris_classification",
-            "model_verison": app.state.model_version
+            "model_version": app.state.model_version
         }
 
     #end point for making predictiosn with iris random forest
@@ -96,7 +96,6 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
             "class_name" : ["sentosa", "versicolor", "virginica"][prediction]
 
         }
-    return app
 
 
 # Production application instance
