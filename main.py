@@ -96,6 +96,7 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
             "class_name" : ["sentosa", "versicolor", "virginica"][prediction]
 
         }
+    return app
 
 
 # Production application instance
