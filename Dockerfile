@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 # copy the application code and saved model into /app
-COPY . .
+COPY main.py .
 
 
 # document the port used by FAST API application

@@ -1,11 +1,38 @@
 # Import testclient so we can send simulate http requests
 from fastapi.testclient import TestClient
 
+import pytest
+
 # import the application object defined in main.py
-from main import app
+from main import create_app
 
 # create a reusable test client for all test functions
-client = TestClient(app)
+#client = TestClient(create_app)
+
+# The test will no longer require a runnign MLFlow server
+# they test api independently using a fake model
+
+class FakeIrisModel:
+    def predict(self, features):
+        return [0]
+
+
+def fake_model_loader():
+    return FakeIrisModel()
+
+def fake_version_loader():
+    return "test-version"
+
+@pytest.fixture
+# fixture helps 
+def client():
+    app = create_app(
+        model_loader = fake_model_loader,
+        version_loader= fake_version_loader
+    )
+
+    with TestClient(app) as test_client:
+        yield test_client
 
 
 
@@ -21,6 +48,7 @@ def test_health_endpoint():
 
     #now check response body
     assert response.json() == {"status":"healthy"}
+    assert response.json()["model_verison"] == "test_version"
 
 def test_valid_iris_prediction():
     """
